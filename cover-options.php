@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Cover options
- * Plugin URI:  https://example.com/
- * Description: Learning how to save options in wordpress
- * Version:     2.0.0
+ * Plugin URI:  https://github.com/HelaGone/CoverOptions
+ * Description: Cover Options for wordpress
+ * Version:     1.0.0
  * Author:      Holkan Luna
- * Author URI:  https://author.example.com/
+ * Author URI:  https://cubeinthebox.com/
  * License:     GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: cover-options
