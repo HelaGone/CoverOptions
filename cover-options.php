@@ -77,7 +77,6 @@ if(!class_exists('CoverOptionsNew')):
 			//Nota 3
 			add_settings_field('co_third_post','Nota 3: (opcional)',array($this, 'co_input_third_post_b'),'coverOptionsPage','co_barra_b_options_section');
 
-
 			//BARRA C OPTION
 			register_setting('coverOptionsPage', 'co_barra_c_option');
 			add_settings_section('co_barra_c_options_section','Barra C',array($this, 'co_barra_c_section_callback'),'coverOptionsPage');
