@@ -35,6 +35,7 @@ function co_uninstall(){
 }
 register_uninstall_hook(__FILE__, 'co_uninstall');
 
+include_once dirname(__FILE__).'/helper_functions.php';
 
 if(!class_exists('CoverOptionsNew')):
 	class CoverOptionsNew{
@@ -64,42 +65,29 @@ if(!class_exists('CoverOptionsNew')):
 			//Nota 3
 			add_settings_field('co_third_post','Nota 3: (opcional)',array($this, 'co_input_third_post'),'coverOptionsPage','co_barra_a_options_section');
 			//Nota 4
-			add_settings_field(
-				'co_fourth_post',
-				'Nota 4: (opcional)', 
-				array($this, 'co_input_fourth_post'), 
-				'coverOptionsPage',
-				'co_barra_a_options_section'
-			);
+			add_settings_field('co_fourth_post','Nota 4: (opcional)', array($this, 'co_input_fourth_post'), 'coverOptionsPage','co_barra_a_options_section');
 
 			//BARRA B OPTION
 			register_setting('coverOptionsPage', 'co_barra_b_option');
-			add_settings_section(
-				'co_barra_b_options_section',
-				'Barra B',
-				array($this, 'co_barra_b_section_callback'),
-				'coverOptionsPage'
-			);
+			add_settings_section('co_barra_b_options_section','Barra B',array($this, 'co_barra_b_section_callback'),'coverOptionsPage');
 			//Nota 1
-			
+			add_settings_field('co_first_post','Nota 1:',array($this, 'co_input_first_post_b'),'coverOptionsPage','co_barra_b_options_section');
 			//Nota 2
-
+			add_settings_field('co_second_post','Nota 2: (opcional)',array($this, 'co_input_second_post_b'),'coverOptionsPage','co_barra_b_options_section');
 			//Nota 3
+			add_settings_field('co_third_post','Nota 3: (opcional)',array($this, 'co_input_third_post_b'),'coverOptionsPage','co_barra_b_options_section');
+
 
 			//BARRA C OPTION
 			register_setting('coverOptionsPage', 'co_barra_c_option');
-			add_settings_section(
-				'co_barra_c_options_section',
-				'Barra C',
-				array($this, 'co_barra_c_section_callback'),
-				'coverOptionsPage'
-			);
+			add_settings_section('co_barra_c_options_section','Barra C',array($this, 'co_barra_c_section_callback'),'coverOptionsPage');
 			//Nota 1
-
+			add_settings_field('co_first_post','Nota 1:',array($this, 'co_input_first_post_c'),'coverOptionsPage','co_barra_c_options_section');
 			//Nota 2
-
+			add_settings_field('co_second_post','Nota 2: (opcional)',array($this, 'co_input_second_post_c'),'coverOptionsPage','co_barra_c_options_section');
 			//Nota 3
-		}
+			add_settings_field('co_third_post','Nota 2: (opcional)',array($this, 'co_input_third_post_c'),'coverOptionsPage','co_barra_c_options_section');
+		}	
 
 		public function co_input_url_field_render(){
 			$options = get_option('co_banner_option'); ?>
@@ -134,109 +122,41 @@ if(!class_exists('CoverOptionsNew')):
 
 		//POSTS BARRA A //////////////////////////////////////////////////////////////
 		public function co_input_first_post(){
-			global $post;
-			$options = get_option('co_barra_a_option'); 
-
-			$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC');
-			$barra_a = new WP_Query($args);
-
-			if($barra_a->have_posts()):?>
-				<select name="co_barra_a_option[co_first_post]" >
-					<option value="">Empty Field</option>
-				<?php
-					while($barra_a->have_posts()):
-						$barra_a->the_post();
-						setup_postdata($post);
-						$is_selected = selected($post->ID, $options['co_first_post'], false);
-						?>
-						<option value="<?php echo esc_attr($post->ID); ?>" <?php echo $is_selected; ?>><?php the_title(); ?></option>
-				<?php
-					endwhile; 
-					wp_reset_postdata(); ?>
-				</select>
-				<?php
-			endif;
+			co_input_posts('co_barra_a_option', 0, 'co_first_post' );
 		}
 
 		public function co_input_second_post(){
-			global $post;
-			$options = get_option('co_barra_a_option'); 
-
-			$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC', 'offset'=>10);
-			$barra_a = new WP_Query($args);
-
-			if($barra_a->have_posts()):?>
-				<select name="co_barra_a_option[co_second_post]" >
-					<option value="">Empty Field</option>
-				<?php
-					while($barra_a->have_posts()):
-						$barra_a->the_post();
-						setup_postdata($post);
-						$is_selected = selected($post->ID, $options['co_second_post'], false);
-						?>
-						<option value="<?php echo esc_attr($post->ID); ?>" <?php echo $is_selected; ?>><?php the_title(); ?></option>
-				<?php
-					endwhile; 
-					wp_reset_postdata(); ?>
-				</select>
-				<?php
-			endif;
+			co_input_posts('co_barra_a_option', 10, 'co_second_post' );
 		}
 
 		public function co_input_third_post(){
-			global $post;
-			$options = get_option('co_barra_a_option'); 
-
-			$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC', 'offset'=>20);
-			$barra_a = new WP_Query($args);
-
-			if($barra_a->have_posts()):?>
-				<select name="co_barra_a_option[co_third_post]" >
-					<option value="">Empty Field</option>
-				<?php
-					while($barra_a->have_posts()):
-						$barra_a->the_post();
-						setup_postdata($post);
-						$is_selected = selected($post->ID, $options['co_third_post'], false);
-						?>
-						<option value="<?php echo esc_attr($post->ID); ?>" <?php echo $is_selected; ?>><?php the_title(); ?></option>
-				<?php
-					endwhile; 
-					wp_reset_postdata(); ?>
-				</select>
-				<?php
-			endif;
+			co_input_posts('co_barra_a_option', 20, 'co_third_post' );
 		}
 
 		public function co_input_fourth_post(){
-			global $post;
-			$options = get_option('co_barra_a_option'); 
-
-			$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC', 'offset'=>30);
-			$barra_a = new WP_Query($args);
-
-			if($barra_a->have_posts()):?>
-				<select name="co_barra_a_option[co_fourth_post]" >
-					<option value="">Empty Field</option>
-				<?php
-					while($barra_a->have_posts()):
-						$barra_a->the_post();
-						setup_postdata($post);
-						$is_selected = selected($post->ID, $options['co_fourth_post'], false);
-						?>
-						<option value="<?php echo esc_attr($post->ID); ?>" <?php echo $is_selected; ?>><?php the_title(); ?></option>
-				<?php
-					endwhile; 
-					wp_reset_postdata(); ?>
-				</select>
-				<?php
-			endif;
+			co_input_posts('co_barra_a_option', 30, 'co_fourth_post' );
 		}
 
-		//POSTS BARRA A //////////////////////////////////////////////////////////////
+		//POSTS BARRA B //////////////////////////////////////////////////////////////
 		public function co_input_first_post_b(){
-			global $post;
-			$options = get_option();
+			co_input_posts('co_barra_b_option', 0, 'co_first_post' );	
+		}
+		public function co_input_second_post_b(){
+			co_input_posts('co_barra_b_option', 10, 'co_second_post' );	
+		}
+		public function co_input_third_post_b(){
+			co_input_posts('co_barra_b_option', 20, 'co_third_post' );	
+		}
+
+		//POSTS BARRA C /////////////////////////////////////////////////////////////
+		public function co_input_first_post_c(){
+			co_input_posts('co_barra_c_option', 0, 'co_first_post' );	
+		}
+		public function co_input_second_post_c(){
+			co_input_posts('co_barra_c_option', 10, 'co_second_post' );	
+		}
+		public function co_input_third_post_c(){
+			co_input_posts('co_barra_c_option', 20, 'co_third_post' );	
 		}
 
 

@@ -1,20 +1,20 @@
 <?php 
 	//POSTS BARRA A //////////////////////////////////////////////////////////////
-	public function co_input_first_post(){
+	function co_input_posts($barra_name, $offset, $tag_id ){
 		global $post;
-		$options = get_option('co_barra_a_option'); 
+		$options = get_option($barra_name); 
 
-		$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC');
+		$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC', 'offset'=>$offset);
 		$barra_a = new WP_Query($args);
 
 		if($barra_a->have_posts()):?>
-			<select name="co_barra_a_option[co_first_post]" >
+			<select name='<?php echo $barra_name."[$tag_id]"; ?>' >
 				<option value="">Empty Field</option>
 			<?php
 				while($barra_a->have_posts()):
 					$barra_a->the_post();
 					setup_postdata($post);
-					$is_selected = selected($post->ID, $options['co_first_post'], false);
+					$is_selected = selected($post->ID, $options[$tag_id], false);
 					?>
 					<option value="<?php echo esc_attr($post->ID); ?>" <?php echo $is_selected; ?>><?php the_title(); ?></option>
 			<?php
