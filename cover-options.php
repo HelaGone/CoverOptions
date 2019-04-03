@@ -18,6 +18,7 @@
  * co_barra_a_option
  * co_barra_b_option
  * co_barra_c_option
+ * co_barra_temas_option
 */
 
 function co_activation_plugin(){
@@ -86,6 +87,22 @@ if(!class_exists('CoverOptionsNew')):
 			add_settings_field('co_second_post','Nota 2: (opcional)',array($this, 'co_input_second_post_c'),'coverOptionsPage','co_barra_c_options_section');
 			//Nota 3
 			add_settings_field('co_third_post','Nota 2: (opcional)',array($this, 'co_input_third_post_c'),'coverOptionsPage','co_barra_c_options_section');
+
+			//BARRA TEMAS
+			register_setting('coverOptionsPage', 'co_barra_temas_option');
+			add_settings_section('co_barra_temas_section', 'Barra Temas', array($this, 'co_barra_temas_callback'), 'coverOptionsPage');
+			//Tema select
+			add_settings_field('co_select_tema', 'Tema:', array($this, 'co_input_select_tema'), 'coverOptionsPage',  'co_barra_temas_section');
+			//Nota 1
+			add_settings_field('co_first_post', 'Nota 1: ', array($this, 'co_input_first_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			//Nota 2
+			add_settings_field('co_second_post', 'Nota 2: ', array($this, 'co_input_second_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			//Nota 3
+			add_settings_field('co_third_post', 'Nota 2: ', array($this, 'co_input_third_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			//Nota 4
+			add_settings_field('co_fourth_post', 'Nota 2: ', array($this, 'co_input_fourth_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			//Nota 5
+			add_settings_field('co_fifth_post', 'Nota 2: ', array($this, 'co_input_fifth_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
 		}	
 
 		public function co_input_url_field_render(){
@@ -118,6 +135,12 @@ if(!class_exists('CoverOptionsNew')):
 		public function co_barra_c_section_callback(){
 			echo 'Selecciona las publicaciones para la Barra C de la portada (home)';
 		}
+
+		//SECTION BARRA TEMAS
+		public function co_barra_temas_callback(){
+			echo 'Escoge los artículos que aparecerán en la sección de Temas de la portada (home)';
+		}
+
 
 		//POSTS BARRA A //////////////////////////////////////////////////////////////
 		public function co_input_first_post(){
@@ -156,6 +179,31 @@ if(!class_exists('CoverOptionsNew')):
 		}
 		public function co_input_third_post_c(){
 			co_input_posts('co_barra_c_option', 20, 'co_third_post' );	
+		}
+
+		//BARRA TEMA ////////////////////////////////////////////////////////////////
+		public function co_input_select_tema(){
+			co_get_term_taxonomy('co_barra_temas_option', 'co_select_tema');
+		}
+		public function co_input_first_post_term(){
+			$options = get_option('co_barra_temas_option');
+			co_get_tema_posts('co_barra_temas_option', 'co_first_post', $options['co_select_tema']);
+		}
+		public function co_input_second_post_term(){
+			$options = get_option('co_barra_temas_option');
+			co_get_tema_posts('co_barra_temas_option', 'co_second_post', $options['co_select_tema']);
+		}
+		public function co_input_third_post_term(){
+			$options = get_option('co_barra_temas_option');
+			co_get_tema_posts('co_barra_temas_option', 'co_third_post', $options['co_select_tema']);
+		}
+		public function co_input_fourth_post_term(){
+			$options = get_option('co_barra_temas_option');
+			co_get_tema_posts('co_barra_temas_option', 'co_fourth_post', $options['co_select_tema']);
+		}
+		public function co_input_fifth_post_term(){
+			$options = get_option('co_barra_temas_option');
+			co_get_tema_posts('co_barra_temas_option', 'co_fifth_post', $options['co_select_tema']);
 		}
 
 
