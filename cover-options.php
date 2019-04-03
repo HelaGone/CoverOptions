@@ -36,6 +36,7 @@ function co_uninstall(){
 }
 register_uninstall_hook(__FILE__, 'co_uninstall');
 
+
 include_once dirname(__FILE__).'/helper_functions.php';
 
 if(!class_exists('CoverOptionsNew')):
@@ -43,7 +44,13 @@ if(!class_exists('CoverOptionsNew')):
 		public function __construct(){
 			 add_action('admin_menu', array($this, 'co_add_admin_menu'));
 			 add_action('admin_init', array($this, 'co_settings_init'));
+			 add_action('admin_init', array($this, 'co_load_plugin_css'));
 		}//end construct
+
+		public function co_load_plugin_css() {
+			wp_register_style( 'co_style', plugins_url( 'cover_options/css/style.css' ) );
+			wp_enqueue_style( 'co_style' );
+		}
 
 		public function co_add_admin_menu(){
 			add_menu_page('Cover Options', 'Cover Options', 'manage_options', 'cover_options', array($this, 'co_cover_options_page'));
@@ -96,23 +103,23 @@ if(!class_exists('CoverOptionsNew')):
 			//Nota 1
 			add_settings_field('co_first_post', 'Nota 1: ', array($this, 'co_input_first_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
 			//Nota 2
-			add_settings_field('co_second_post', 'Nota 2: ', array($this, 'co_input_second_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			add_settings_field('co_second_post', 'Nota 2: (opcional)', array($this, 'co_input_second_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
 			//Nota 3
-			add_settings_field('co_third_post', 'Nota 2: ', array($this, 'co_input_third_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			add_settings_field('co_third_post', 'Nota 3: (opcional)', array($this, 'co_input_third_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
 			//Nota 4
-			add_settings_field('co_fourth_post', 'Nota 2: ', array($this, 'co_input_fourth_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			add_settings_field('co_fourth_post', 'Nota 4: (opcional)', array($this, 'co_input_fourth_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
 			//Nota 5
-			add_settings_field('co_fifth_post', 'Nota 2: ', array($this, 'co_input_fifth_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
+			add_settings_field('co_fifth_post', 'Nota 5: (opcional)', array($this, 'co_input_fifth_post_term'), 'coverOptionsPage', 'co_barra_temas_section' );
 		}	
 
 		public function co_input_url_field_render(){
 			$options = get_option('co_banner_option'); ?>
-			<input type="text" name="co_banner_option[co_banner_input_url]" value="<?php echo $options['co_banner_input_url']; ?>">
+			<input type="text" name="co_banner_option[co_banner_input_url]" value="<?php echo $options['co_banner_input_url']; ?>" class="custom_input">
 		<?php	
 		}
 		public function co_input_link_field_render(){ 
 			$options = get_option('co_banner_option'); ?>
-			<input type="text" name="co_banner_option[co_banner_input_link]" value="<?php echo $options['co_banner_input_link']; ?>">
+			<input type="text" name="co_banner_option[co_banner_input_link]" value="<?php echo $options['co_banner_input_link']; ?>" class="custom_input">
 		<?php	
 		}
 
