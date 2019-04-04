@@ -8,7 +8,7 @@
 		$barra_a = new WP_Query($args);
 
 		if($barra_a->have_posts()):?>
-			<select name='<?php echo $barra_name."[$tag_id]"; ?>' class="custom_input">
+			<select name='<?php echo $barra_name."[$tag_id]"; ?>' class="custom_input enhanced_select">
 				<option value="">Empty Field</option>
 			<?php
 				while($barra_a->have_posts()):
@@ -31,7 +31,7 @@
 		$args = array('taxonomy'=>'post_tag','hide_empty'=>false,'orderby'=>'count','order'=>'DESC');
 		$terms = get_terms($args);
 		if(is_array($terms)&&!empty($terms)): ?>
-			<select name='<?php echo $barra_name."[$input_name]"; ?>' class="custom_input">
+			<select name='<?php echo $barra_name."[$input_name]"; ?>' class="custom_input enhanced_select">
 				<option value="">Empty Field</option>
 				<?php 
 					foreach ($terms as $term): 
@@ -52,7 +52,7 @@
 		$args = array('post_type'=>'post','posts_per_page'=>10,'post_status'=>'publish','orderby'=>'date','order'=>'DESC','tax_query'=>array(array('taxonomy'=>'post_tag','field'=>'term_id','terms'=>array($term_id))));
 		$posts = new WP_Query($args);
 		if($posts->have_posts()): ?>
-			<select name='<?php echo $barra_name."[$input_name]"; ?>' class="custom_input">
+			<select name='<?php echo $barra_name."[$input_name]"; ?>' class="custom_input enhanced_select">
 				<option value="">Empty Field</option>
 				<?php
 					while($posts->have_posts()):
